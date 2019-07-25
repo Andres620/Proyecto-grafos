@@ -14,7 +14,7 @@ class places:
         
         
     def printTransport(self):
-        print('Transportes:  ',self.transport)
+        print('Transportes:  ',self.transport ,"\n")
         
     def printPlaces(self):
-        print('Lugares:  ', self.places[0])
+        print('Lugares:  ', self.places[0]) #solo imprime el primer lugar

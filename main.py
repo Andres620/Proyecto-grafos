@@ -23,9 +23,6 @@ def main():
         gr.printTransport()
         
         print("\n prueba ------------------------------------")
-        gr.prueba()
-        aux=gr.returnPlace('A')
-        print('Metodo returnPlace',aux)
         
         
             

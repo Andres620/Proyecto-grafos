@@ -26,7 +26,7 @@ class GUI:
         self.screen=pygame.display.set_mode((self.sWIDTH, self.sHEIGHT),RESIZABLE)
         self.screen.fill((254,245,231))
         self.font = pygame.font.SysFont("Arial", 12)
-        
+        self.paintLines(self.graph) #lo saco del while trye para que no titile
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -34,7 +34,7 @@ class GUI:
                     sys.exit() 
                     
             self.paint(self.graph)
-            self.paintLines(self.graph)
+            
             pygame.display.update()
             
             
@@ -47,10 +47,15 @@ class GUI:
                 pygame.display.flip()
                 
     def paintLines(self,graph):
+
          for h in self.graph.places:
             for j in h['goingTo']:
                 x1=h['posX']+20
                 y1=h['posY']+20
                 x2=self.graph.returnPlace(j['label'])['posX']+20
                 y2=self.graph.returnPlace(j['label'])['posY']+20
-                pygame.draw.line(self.screen,(200, 0, 0),(x1,y1),(x2,y2))
+                if not j['obstruction']:
+                    pygame.draw.line(self.screen,(26,8,242),(x1,y1),(x2,y2),5)
+                else:
+                    pygame.draw.line(self.screen,(200, 0, 0),(x1,y1),(x2,y2),5)
+         pygame.display.flip()

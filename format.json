@@ -74,16 +74,19 @@
       [
         {
           "label":"C",
+          "obstruction":false,
           "travelDistance": 63,
           "transportForms":[1, 2, 3]
         },
         {
           "label":"E",
+          "obstruction":false,
           "travelDistance": 74,
           "transportForms":[1, 2, 3]
         },
         {
           "label":"F",
+          "obstruction":false,
           "travelDistance": 105,
           "transportForms":[1, 2, 3]
         }
@@ -139,11 +142,13 @@
       [
         {
           "label":"C",
+          "obstruction":false,
           "travelDistance": 22,
           "transportForms":[2, 3]
         },
         {
           "label":"D",
+          "obstruction":false,
           "travelDistance": 45,
           "transportForms":[2, 3]
         }
@@ -199,26 +204,31 @@
       [
         {
           "label":"A",
+          "obstruction":false,
           "travelDistance": 63,
           "transportForms":[1, 2, 3]
         },
         {
           "label":"E",
+          "obstruction":false,
           "travelDistance": 28,
           "transportForms":[1, 3]
         },
         {
           "label":"B",
+          "obstruction":false,
           "travelDistance": 22,
           "transportForms":[2, 3]
         },
         {
           "label":"D",
+          "obstruction":false,
           "travelDistance": 30,
           "transportForms":[2, 3]
         },
         {
           "label":"H",
+          "obstruction":false,
           "travelDistance": 125,
           "transportForms":[2, 3]
         }
@@ -274,16 +284,19 @@
       [
         {
           "label":"B",
+          "obstruction":false,
           "travelDistance": 45,
           "transportForms":[2, 3]
         },
         {
           "label":"C",
+          "obstruction":false,
           "travelDistance": 30,
           "transportForms":[2, 3]
         },
         {
           "label":"H",
+          "obstruction":false,
           "travelDistance": 113,
           "transportForms":[2, 3]
         }
@@ -339,21 +352,25 @@
       [
         {
           "label":"A",
+          "obstruction":false,
           "travelDistance": 74,
           "transportForms":[1, 2, 3]
         },
         {
           "label":"C",
+          "obstruction":false,
           "travelDistance": 28,
           "transportForms":[1, 3]
         },
         {
           "label":"F",
+          "obstruction":false,
           "travelDistance": 96,
           "transportForms":[1, 3]
         },
         {
           "label":"G",
+          "obstruction":false,
           "travelDistance": 53,
           "transportForms":[2, 3]
         }
@@ -409,11 +426,13 @@
       [
         {
           "label":"A",
+          "obstruction":false,
           "travelDistance": 105,
           "transportForms":[1, 2, 3]
         },
         {
           "label":"E",
+          "obstruction":false,
           "travelDistance": 96,
           "transportForms":[1, 3]
         }
@@ -469,21 +488,25 @@
       [
         {
           "label":"E",
+          "obstruction":false,
           "travelDistance": 53,
           "transportForms":[2, 3]
         },
         {
           "label":"J",
+          "obstruction":false,
           "travelDistance": 150,
           "transportForms":[2, 3]
         },
         {
           "label":"I",
+          "obstruction":false,
           "travelDistance": 236,
           "transportForms":[3]
         },
         {
           "label":"H",
+          "obstruction":false,
           "travelDistance": 47,
           "transportForms":[2, 3]
         }
@@ -539,21 +562,25 @@
       [
         {
           "label":"C",
+          "obstruction":false,
           "travelDistance": 125,
           "transportForms":[2, 3]
         },
         {
           "label":"D",
+          "obstruction":false,
           "travelDistance": 113,
           "transportForms":[2, 3]
         },
         {
           "label":"I",
+          "obstruction":false,
           "travelDistance": 210,
           "transportForms":[2, 3]
         },
         {
           "label":"G",
+          "obstruction":false,
           "travelDistance": 47,
           "transportForms":[2, 3]
         }
@@ -609,16 +636,19 @@
       [
         {
           "label":"J",
+          "obstruction":false,
           "travelDistance": 82,
           "transportForms":[1]
         },
         {
           "label":"G",
+          "obstruction":false,
           "travelDistance": 236,
           "transportForms":[3]
         },
         {
           "label":"H",
+          "obstruction":false,
           "travelDistance": 210,
           "transportForms":[2, 3]
         }
@@ -674,11 +704,13 @@
       [
         {
           "label":"I",
+          "obstruction":false,
           "travelDistance": 82,
           "transportForms":[1]
         },
         {
           "label":"G",
+          "obstruction":false,
           "travelDistance": 150,
           "transportForms":[2, 3]
         }

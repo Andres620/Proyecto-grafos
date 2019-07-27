@@ -18,3 +18,17 @@ class places:
         
     def printPlaces(self):
         print('Lugares:  ', self.places[0]) #solo imprime el primer lugar
+        
+    def returnPlace(self,label):        #retorna los datos de la ciudad que tenga ese label
+        for h in self.places:
+            if h['label']==label:
+                return h
+        
+    def prueba(self):
+        buscar='A'
+        for h in self.places:
+            for j in h['goingTo']:
+                if buscar == h['label']:
+                    print(h['posY'])
+
+       

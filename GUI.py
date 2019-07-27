@@ -17,7 +17,7 @@ class GUI:
         self.sHEIGHT = 600    #screen height
         self.font=None
         self.screen=None
-        self.cityA=pygame.image.load("images/GPS.png")
+        self.cityA=pygame.image.load("images/cityA.png")
         
         
     def window(self):
@@ -32,7 +32,9 @@ class GUI:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit() 
+                    
             self.paint(self.graph)
+            self.paintLines(self.graph)
             pygame.display.update()
             
             
@@ -40,5 +42,15 @@ class GUI:
     
     def paint(self,graph):
         if not graph is None:
-            self.screen.blit(self.cityA,(100,50))
-            pygame.display.flip()
+            for h in graph.places:
+                self.screen.blit(self.cityA,(h['posX'],h['posY']))
+                pygame.display.flip()
+                
+    def paintLines(self,graph):
+         for h in self.graph.places:
+            for j in h['goingTo']:
+                x1=h['posX']+20
+                y1=h['posY']+20
+                x2=self.graph.returnPlace(j['label'])['posX']+20
+                y2=self.graph.returnPlace(j['label'])['posY']+20
+                pygame.draw.line(self.screen,(200, 0, 0),(x1,y1),(x2,y2))

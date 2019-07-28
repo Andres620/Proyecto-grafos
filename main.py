@@ -24,6 +24,7 @@ def main():
         
         print("\n prueba ------------------------------------")
         #gr.callObstructVia()
+        print(gr.adyacentes('A'))
         
             
             

@@ -4,6 +4,7 @@ Created on Thu Jul 18 12:03:49 2019
 
 @author: ayuwoki
 """
+from heapq import heappop, heappush
 
 class places:
     places=None
@@ -11,6 +12,13 @@ class places:
     def __init__(self,city,transports):
         self.places=city
         self.transport=transports
+    
+    def adyacentes(self,node):
+        for h in self.places:
+            if h['label']==node:
+                return h['goingTo']
+        return 
+                
         
         
     def printTransport(self):
@@ -23,6 +31,10 @@ class places:
         for h in self.places:
             if h['label']==label:
                 return h
+    def returnMinTime(self,label):
+        for h in self.places:
+            if h['label']==label:
+                return h['minTimeHere']
     def midPoint(self,x1,y1,x2,y2):
         avgX=(x1+x2)/2
         avgY=(y1+y2)/2
@@ -51,8 +63,23 @@ class places:
                         print(j['obstruction'])
                         pass
                 pass
-        
-        
+    
+    def rutaMasCorta(self,origin,destination,time,path=[]):
+        if time<self.returnMinTime(origin):
+            return path
+            path=path+[origin]
+        if origin == destination:
+            return path
+        shorter=None
+        for ady in self.adyacentes(origin):
+            if ady not in path:
+                newPath= self.rutaMasCorta(ady,destination,path)
+                if newPath:
+                    if not shorter or len(newPath)<len(shorter):
+                        shorter=newPath
+        return shorter   
+    
+    
     def prueba(self):
         buscar='A'
         for h in self.places:

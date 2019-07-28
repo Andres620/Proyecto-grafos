@@ -23,12 +23,35 @@ class places:
         for h in self.places:
             if h['label']==label:
                 return h
+    def midPoint(self,x1,y1,x2,y2):
+        avgX=(x1+x2)/2
+        avgY=(y1+y2)/2
+        return (avgX,avgY)
+    
+    def obstructVia(self,origin,destination):  #sirve para obstruir o desobstruir vias
+        for h in self.places:
+            if h['label']==origin:
+                for j in h['goingTo']:
+                    if j['label']==destination:
+                        j['obstruction']=not j['obstruction']
+                        print(j['obstruction'])
+                        pass
+                pass
+        for h in self.places:
+            if h['label']==destination:
+                for j in h['goingTo']:
+                    if j['label']==origin:
+                        j['obstruction']=not j['obstruction']
+                        print(j['obstruction'])
+                        pass
+                pass
+        
         
     def prueba(self):
         buscar='A'
         for h in self.places:
             for j in h['goingTo']:
-                if buscar == h['label']:
+                if buscar == j['label']:
                     print(h['posY'])
 
        

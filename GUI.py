@@ -18,6 +18,7 @@ class GUI:
         self.font=None
         self.screen=None
         self.cityA=pygame.image.load("images/cityA.png")
+        self.deadDonkey=pygame.image.load("images/deadDonkey.png")
         
         
     def window(self):
@@ -34,7 +35,7 @@ class GUI:
                     sys.exit() 
                     
             self.paint(self.graph)
-            
+
             pygame.display.update()
             
             
@@ -58,4 +59,7 @@ class GUI:
                     pygame.draw.line(self.screen,(26,8,242),(x1,y1),(x2,y2),5)
                 else:
                     pygame.draw.line(self.screen,(200, 0, 0),(x1,y1),(x2,y2),5)
+                    avgPosX,avgPosY=self.graph.midPoint(x1,y1,x2,y2)
+                    self.screen.blit(self.deadDonkey,(avgPosX,avgPosY-30))
+                    pygame.display.flip()
          pygame.display.flip()

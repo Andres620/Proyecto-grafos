@@ -28,6 +28,12 @@ class places:
         avgY=(y1+y2)/2
         return (avgX,avgY)
     
+    def callObstructVia(self):
+        origin=input('Ingrese ID del origen: ')
+        destination=input('Ingrese ID del destino: ')
+        self.obstructVia(origin,destination)
+        
+    
     def obstructVia(self,origin,destination):  #sirve para obstruir o desobstruir vias
         for h in self.places:
             if h['label']==origin:

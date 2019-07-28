@@ -23,7 +23,7 @@ def main():
         gr.printTransport()
         
         print("\n prueba ------------------------------------")
-        gr.obstructVia('J','I')
+        #gr.callObstructVia()
         
             
             

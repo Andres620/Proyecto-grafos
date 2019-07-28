@@ -7,6 +7,7 @@ Created on Thu Jul 25 08:50:52 2019
 
 import pygame
 from pygame.locals import RESIZABLE
+from pygame.locals import K_1
 import sys
 
 class GUI:
@@ -33,7 +34,12 @@ class GUI:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit() 
-                    
+                if event.type == pygame.KEYDOWN:
+                    if event.key == K_1:
+                        print('Obstruir via')
+                        self.graph.callObstructVia()
+                        self.screen.fill((254,245,231))
+                        self.paintLines(self.graph)
             self.paint(self.graph)
 
             pygame.display.update()

@@ -13,11 +13,13 @@ class places:
         self.places=city
         self.transport=transports
     
-    def adyacentes(self,node):
+    def adjacent(self,label):
+        adjacent={}
         for h in self.places:
-            if h['label']==node:
-                return h['goingTo']
-        return 
+            if h['label']==label:
+                for j in h['goingTo']:
+                    adjacent[j['label']]=j['travelDistance']
+        return adjacent
                 
         
         
@@ -63,21 +65,49 @@ class places:
                         print(j['obstruction'])
                         pass
                 pass
+            
+            
+    def returnGoldByKm(self,km,idTransport):  #retorna la cantidad de oro que se cobra por kms
+        if idTransport >=1 and idTransport<=3:
+            res=0
+            for h in self.transport:
+                if h['id']==idTransport:
+                    res=km*h['valueByKm']
+            return res
+        return 0
     
-    def rutaMasCorta(self,origin,destination,time,path=[]):
-        if time<self.returnMinTime(origin):
-            return path
-            path=path+[origin]
-        if origin == destination:
-            return path
-        shorter=None
-        for ady in self.adyacentes(origin):
-            if ady not in path:
-                newPath= self.rutaMasCorta(ady,destination,path)
-                if newPath:
-                    if not shorter or len(newPath)<len(shorter):
-                        shorter=newPath
-        return shorter   
+    
+    def prim_mst(self,origin):  #hace el prim y retorna un diccionario con el camino
+        v,path=[],{}
+        Q=[(0,None,origin)]
+        while Q:
+            weight,o,d=heappop(Q)
+            if d in v:
+                continue
+            v.append(d)
+            if o is None:
+                pass
+            elif o in path:
+               # print('hola')
+                path[d]=[o,weight]
+            else:
+                #print('hola x2')
+                path[o]=[d,weight]
+            for ady, weight in self.adjacent(d).items():
+                heappush(Q,(weight,d,ady))
+        return path
+    
+    def longWayWithGold(self,origin,gold,idTransport): #mira la mayor cantidad de lugares visitables posibles de pendiendo del oro que tenga
+        path={}
+        aux=self.prim_mst(origin)
+        for h in aux:
+            if gold > self.returnGoldByKm(aux[h][1],idTransport):
+                gold-=self.returnGoldByKm(aux[h][1],idTransport)
+                path[h]=aux[h]
+            else:
+                return path
+        return path
+                
     
     
     def prueba(self):

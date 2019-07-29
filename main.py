@@ -19,13 +19,15 @@ def main():
         
         gr=places(graph,transport)
         gui=GUI(gr)
-        gr.printPlaces()
-        gr.printTransport()
+        #gr.printPlaces()
+        #gr.printTransport()
         
         print("\n prueba ------------------------------------")
         #gr.callObstructVia()
-        print(gr.adyacentes('A'))
-        
+        #print(gr.adjacent('A'))
+        print(gr.returnGoldByKm(4,3))
+        print('Prim: ', gr.prim_mst('A')) 
+        print('camino con oro: ',gr.longWayWithGold('A',2500,1))
             
             
         print('hola mundo')

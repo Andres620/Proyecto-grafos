@@ -6,8 +6,9 @@ Created on Thu Jul 25 08:50:52 2019
 """
 
 import pygame
+from time import sleep
 from pygame.locals import RESIZABLE
-from pygame.locals import K_1,K_2
+from pygame.locals import K_1,K_2,K_r
 import sys
 
 class GUI:
@@ -42,10 +43,15 @@ class GUI:
                         self.paintLines()
                     if event.key == K_2:
                         print('Mayor cantidad de destinos segun la cantidad de oro')
-                        aux=self.graph.longWayWithGold('A',2500,1)
+                        aux=self.graph.longWayWithGold('A',25000,1)
+                        self.paintLines()
                         self.paintPath(aux)
+                    if event.key == K_r:
+                        print('refrescar')
                         self.screen.fill((254,245,231))
                         self.paintLines()
+                        
+                        
             self.paint(self.graph)
 
             pygame.display.update()
@@ -75,8 +81,11 @@ class GUI:
                     pygame.display.flip()
          pygame.display.flip()
     
-    def paintPath(self,dict):  #modificar para mañana, metodo para que dibuje el camino
-         if not dict is None:
-             for h in dict:
-                 aux=self.graph.returnPosition(h)
-                 print(aux)
+    def paintPath(self,path):  #modificar para mañana, metodo para que dibuje el camino
+         if not path is None:
+             for h in path:
+                 pos1=self.graph.returnPosition(h)
+                 pos2=self.graph.returnPosition(path[h][0])
+                 pygame.draw.line(self.screen,(46,204,113),(pos1[0]+20,pos1[1]+20),(pos2[0]+20,pos2[1]+20),5)
+
+                 

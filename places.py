@@ -82,6 +82,14 @@ class places:
             return res
         return 0
     
+    def returnTimeByKm(self,km,idTransport):  #retorna la cantidad de time que se cobra por kms
+        if idTransport >=1 and idTransport<=3:
+            res=0
+            for h in self.transport:
+                if h['id']==idTransport:
+                    res=km*h['timeByKm']
+            return res
+        return 0
     
     def prim_mst(self,origin):  #hace el prim y retorna un diccionario con el camino
         v,path=[],{}
@@ -108,6 +116,7 @@ class places:
         aux=self.prim_mst(origin)
         for h in aux:
             if gold > self.returnGoldByKm(aux[h][1],idTransport):
+                print('pruebita ',self.returnGoldByKm(aux[h][1],idTransport))
                 gold-=self.returnGoldByKm(aux[h][1],idTransport)
                 path[h]=aux[h]
             else:
@@ -122,5 +131,6 @@ class places:
             for j in h['goingTo']:
                 if buscar == j['label']:
                     print(h['posY'])
+    
 
        

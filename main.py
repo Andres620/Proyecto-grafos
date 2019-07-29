@@ -25,9 +25,10 @@ def main():
         print("\n prueba ------------------------------------")
         #gr.callObstructVia()
         #print(gr.adjacent('A'))
-        print(gr.returnGoldByKm(4,3))
+        print('dineros',gr.returnGoldByKm(4,3))
+        print('tiempos',gr.returnTimeByKm(43,3))
         print('Prim: ', gr.prim_mst('A')) 
-        print('camino con oro: ',gr.longWayWithGold('A',2500,1))
+        print('camino con oro: ',gr.longWayWithGold('A',25000,1))
             
             
         print('hola mundo')

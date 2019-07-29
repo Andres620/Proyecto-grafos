@@ -7,7 +7,7 @@ Created on Thu Jul 25 08:50:52 2019
 
 import pygame
 from pygame.locals import RESIZABLE
-from pygame.locals import K_1
+from pygame.locals import K_1,K_2
 import sys
 
 class GUI:
@@ -28,7 +28,7 @@ class GUI:
         self.screen=pygame.display.set_mode((self.sWIDTH, self.sHEIGHT),RESIZABLE)
         self.screen.fill((254,245,231))
         self.font = pygame.font.SysFont("Arial", 12)
-        self.paintLines(self.graph) #lo saco del while trye para que no titile
+        self.paintLines() #lo saco del while trye para que no titile
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -39,7 +39,13 @@ class GUI:
                         print('Obstruir via')
                         self.graph.callObstructVia()
                         self.screen.fill((254,245,231))
-                        self.paintLines(self.graph)
+                        self.paintLines()
+                    if event.key == K_2:
+                        print('Mayor cantidad de destinos segun la cantidad de oro')
+                        aux=self.graph.longWayWithGold('A',2500,1)
+                        self.paintPath(aux)
+                        self.screen.fill((254,245,231))
+                        self.paintLines()
             self.paint(self.graph)
 
             pygame.display.update()
@@ -53,8 +59,7 @@ class GUI:
                 self.screen.blit(self.cityA,(h['posX'],h['posY']))
                 pygame.display.flip()
                 
-    def paintLines(self,graph):
-
+    def paintLines(self):
          for h in self.graph.places:
             for j in h['goingTo']:
                 x1=h['posX']+20
@@ -69,3 +74,9 @@ class GUI:
                     self.screen.blit(self.deadDonkey,(avgPosX,avgPosY-30))
                     pygame.display.flip()
          pygame.display.flip()
+    
+    def paintPath(self,dict):  #modificar para mañana, metodo para que dibuje el camino
+         if not dict is None:
+             for h in dict:
+                 aux=self.graph.returnPosition(h)
+                 print(aux)

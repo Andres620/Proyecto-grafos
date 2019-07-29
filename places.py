@@ -37,6 +37,12 @@ class places:
         for h in self.places:
             if h['label']==label:
                 return h['minTimeHere']
+            
+    def returnPosition(self,label):
+        for h in self.places:
+            if h['label']==label:
+                return h['posX'],h['posY']
+        
     def midPoint(self,x1,y1,x2,y2):
         avgX=(x1+x2)/2
         avgY=(y1+y2)/2
@@ -98,7 +104,7 @@ class places:
         return path
     
     def longWayWithGold(self,origin,gold,idTransport): #mira la mayor cantidad de lugares visitables posibles de pendiendo del oro que tenga
-        path={}
+        path={}                                        #Este es el que se llama
         aux=self.prim_mst(origin)
         for h in aux:
             if gold > self.returnGoldByKm(aux[h][1],idTransport):

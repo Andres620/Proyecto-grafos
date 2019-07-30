@@ -123,6 +123,17 @@ class places:
                 return path
         return path
                 
+    def longWayWithTime(self,origin,time,idTransport): #mira la mayor cantidad de lugares visitables posibles de pendiendo del timepo que tenga
+        path={}                                        #Este es el que se llama
+        aux=self.prim_mst(origin)
+        for h in aux:
+            if time > self.returnTimeByKm(aux[h][1],idTransport):
+                print('pruebita tiempo ',self.returnTimeByKm(aux[h][1],idTransport))
+                time-=self.returnTimeByKm(aux[h][1],idTransport)
+                path[h]=aux[h]
+            else:
+                return path
+        return path
     
     
     def prueba(self):

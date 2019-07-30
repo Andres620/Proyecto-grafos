@@ -28,7 +28,8 @@ def main():
         print('dineros',gr.returnGoldByKm(4,3))
         print('tiempos',gr.returnTimeByKm(43,3))
         print('Prim: ', gr.prim_mst('A')) 
-        print('camino con oro: ',gr.longWayWithGold('A',25000,1))
+        print('camino con oro: ',gr.longWayWithGold('A',2500,1))
+        print('\n','camino con tiempo: ',gr.longWayWithTime('A',2500,1))
             
             
         print('hola mundo')

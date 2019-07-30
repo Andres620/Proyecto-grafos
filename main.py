@@ -30,7 +30,8 @@ def main():
         print('Prim: ', gr.prim_mst('A')) 
         print('camino con oro: ',gr.longWayWithGold('A',2500,1))
         print('\n','camino con tiempo: ',gr.longWayWithTime('A',2500,1))
-            
+        print('\n travel:',gr.travel('A'))
+        #print('place:',gr.returnPlace('A'))
             
         print('hola mundo')
         gui.window()

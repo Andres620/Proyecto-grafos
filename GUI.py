@@ -8,7 +8,7 @@ Created on Thu Jul 25 08:50:52 2019
 import pygame
 from time import sleep
 from pygame.locals import RESIZABLE
-from pygame.locals import K_1,K_2,K_3,K_r
+from pygame.locals import K_1,K_2,K_3,K_4,K_r
 import sys
 
 class GUI:
@@ -43,19 +43,26 @@ class GUI:
                         self.paintLines()
                     if event.key == K_2:
                         print('Mayor cantidad de destinos segun la cantidad de oro: ')
+                        origin=input('Ingrese nodo origen: ')
                         money=int(input('Ingrese la cantidad de oro del mochilero: '))
                         print('\nElegir transporte: ')
                         idTransport=int(input('1: plane 2:car 3:donkey: '))
-                        aux=self.graph.longWayWithGold('A',money,idTransport)
+                        aux=self.graph.longWayWithGold(origin,money,idTransport)
                         self.paintLines()
                         self.paintPath(aux)
                     if event.key == K_3:
                         print('Mayor cantidad de destinos segun el tiempo')
+                        origin=input('Ingrese nodo origen: ')
                         time=int(input('Ingrese el tiempo disponible para el viaje del mochilero: '))
                         print('\nElegir transporte: ')
                         idTransport=int(input('1: plane 2:car 3:donkey: '))
-                        aux=self.graph.longWayWithTime('A',time,idTransport)
+                        aux=self.graph.longWayWithTime(origin,time,idTransport)
                         self.paintLines()
+                        self.paintPath(aux)
+                    if event.key == K_4:
+                        print('ruta con menor gasto')
+                        origin=input('Ingrese nodo origen: ')
+                        aux=self.graph.prim_mst(origin)
                         self.paintPath(aux)
                     if event.key == K_r:
                         print('refrescar')
@@ -74,6 +81,8 @@ class GUI:
         if not graph is None:
             for h in graph.places:
                 self.screen.blit(self.cityA,(h['posX'],h['posY']))
+                textID = self.font.render("City: {}".format(h['label']), 0, (0, 0, 0))
+                self.screen.blit(textID, (h['posX']-10, h['posY']-20))
                 pygame.display.flip()
                 
     def paintLines(self):

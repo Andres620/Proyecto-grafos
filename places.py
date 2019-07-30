@@ -5,6 +5,7 @@ Created on Thu Jul 18 12:03:49 2019
 @author: ayuwoki
 """
 from heapq import heappop, heappush
+from traveler import  traveler
 
 class places:
     places=None
@@ -26,8 +27,10 @@ class places:
     def printTransport(self):
         print('Transportes:  ',self.transport ,"\n")
         
-    def printPlaces(self):
-        print('Lugares:  ', self.places[0]) #solo imprime el primer lugar
+    def printPlaces(self,label):
+        for h in self.places:
+            if h['label']==label:
+                return h
         
     def returnPlace(self,label):        #retorna los datos de la ciudad que tenga ese label
         for h in self.places:
@@ -48,7 +51,7 @@ class places:
         avgY=(y1+y2)/2
         return (avgX,avgY)
     
-    def callObstructVia(self):
+    def callObstructVia(self):  #este se llama
         origin=input('Ingrese ID del origen: ')
         destination=input('Ingrese ID del destino: ')
         self.obstructVia(origin,destination)
@@ -108,8 +111,17 @@ class places:
                 #print('hola x2')
                 path[o]=[d,weight]
             for ady, weight in self.adjacent(d).items():
+                if self.adjacentObstruct(d)[ady]: continue
                 heappush(Q,(weight,d,ady))
         return path
+    
+    def adjacentObstruct(self,label):
+        adjacent={}
+        for h in self.places:
+            if h['label']==label:
+                for j in h['goingTo']:
+                    adjacent[j['label']]=j['obstruction']
+        return adjacent
     
     def longWayWithGold(self,origin,gold,idTransport): #mira la mayor cantidad de lugares visitables posibles de pendiendo del oro que tenga
         path={}                                        #Este es el que se llama
@@ -134,8 +146,43 @@ class places:
             else:
                 return path
         return path
-    
-    
+
+
+    def travel(self,origin):
+        gold=int(input('Ingresar oro del mochilero: '))
+        backpacker=traveler(gold)
+        path=self.prim_mst(origin)
+        print('travel ',path)
+        for node in path:
+            if backpacker.estimate==True:
+                print('Oro por debajo del 40% inicial, por favor seleccionar trabajo')
+                aux=self.Jobs(node)
+                backpacker.auxHungry+=aux[1]
+                backpacker.auxSleep+=aux[1]
+                backpacker.gold+=aux[0]
+            
+        print('valor ',backpacker.auxHungry )
+        print('oro', backpacker.gold)
+            
+            
+            
+    def Jobs(self,label):
+        city=self.returnPlace(label)
+        time=0
+        gold=0
+        auxPrint=''
+        c=0
+        for h in city['jobs']:
+            c+=1
+            auxPrint +='\nTrabajos ciudad'+city['label']+ ': ' + 'Presione ({})'.format(c) + h['name'] + ' gain: ' +  str(h['gain']) + ' time: ' + str(h['time'])
+        print(auxPrint)
+        val=int(input('---> '))
+        cant=int(input('cantidad de veces que va a realizar el trabajo --> '))
+        time=city['jobs'][val-1]['time']*cant
+        gold=city['jobs'][val-1]['gain']*cant
+        return gold, time
+            
+            
     def prueba(self):
         buscar='A'
         for h in self.places:

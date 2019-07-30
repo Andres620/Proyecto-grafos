@@ -148,23 +148,51 @@ class places:
         return path
 
 
-    def travel(self,origin):
-        gold=int(input('Ingresar oro del mochilero: '))
-        backpacker=traveler(gold)
-        if backpacker.estimate==True:
-            print('Oro por debajo del 40% inicial, por favor seleccionar trabajo')
+    def travel(self,origin,backpacker):   #metodo para viajar
+        if backpacker.goToEat()==True:
+            aux=self.eat(origin)
+            backpacker.gold-=aux[0]
+            backpacker.timeTravel+=aux[1]
+            backpacker.localTime+=aux[1]
+            backpacker.localTime+=aux[1]
+            backpacker.auxHungry=0          
+        if backpacker.goToSleep()==True:
+            aux=self.sleep(origin)
+            backpacker.gold-=aux[0]
+            backpacker.timeTravel+=aux[1]
+            backpacker.localTime+=aux[1]
+            backpacker.auxSleep=0
+            print('aux sleep: ', backpacker.auxSleep)
+            print('oro: ', backpacker.gold)
+        if backpacker.estimate()==True:
+            print('\nOro por debajo del 40% inicial, por favor seleccionar trabajo')
             aux=self.Jobs(origin)
+            backpacker.timeTravel+=aux[1] #aumenta contador de tiempo de viaje
+            backpacker.localTime+=aux[1]
+            backpacker.auxHungry+=aux[1] #aumenta contador de hambre
+            backpacker.auxSleep+=aux[1] #aumenta contador de sueño
+            backpacker.gold+=aux[0] #aumenta oro del mochilero
+        while True:
+            print('tiempo de jugar')
+            aux=self.activities(origin)
+            backpacker.timeTravel+=aux[1]
+            backpacker.localTime+=aux[1]
             backpacker.auxHungry+=aux[1]
             backpacker.auxSleep+=aux[1]
-            backpacker.gold+=aux[0]
-            
-        print('valor ',backpacker.auxHungry )
+            backpacker.gold-=aux[0]
+            inp=int(input('Ingrese 1:realizar otra actividad 2:salir'))
+            if inp==2:
+                break
+        
+        
+        print('tiempo de viaje',backpacker.timeTravel )
         print('oro', backpacker.gold)
         
-        return True
+        
+        
             
             
-            
+    
     def Jobs(self,label):
         city=self.returnPlace(label)
         time=0
@@ -180,5 +208,49 @@ class places:
         time=city['jobs'][val-1]['time']*cant
         gold=city['jobs'][val-1]['gain']*cant
         return gold, time
-            
-            
+    
+    def activities(self,label):
+        city=self.returnPlace(label)
+        time=0
+        cost=0
+        auxPrint=''
+        c=0
+        for h in city['things_to_do']:
+            if h['type']=='optional':
+                c+=1
+                auxPrint +='\nActividades ciudad'+city['label']+ ': ' + 'Presione ({})'.format(c) + h['name'] + ' cost: ' +  str(h['cost']) + ' time: ' + str(h['time'])
+        print(auxPrint)
+        val=int(input('---> '))
+        time=city['things_to_do'][val-1]['time']
+        cost=city['things_to_do'][val-1]['cost']
+        return cost,time
+        
+    
+    def eat(self,label):
+        city=self.returnPlace(label)
+        time=0
+        cost=0
+        for h in city['things_to_do']:
+            if h['name']=='Eat':
+                time=h['time']
+                cost=h['cost']
+                continue
+        return cost,time
+                
+                
+    def sleep(self,label):
+        city=self.returnPlace(label)
+        time=0
+        cost=0
+        for h in city['things_to_do']:
+            if h['name']=='Sleep':
+                time=h['time']
+                cost=h['cost']
+                continue
+        return cost,time
+        
+        
+        
+        
+        
+        

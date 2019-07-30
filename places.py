@@ -151,18 +151,17 @@ class places:
     def travel(self,origin):
         gold=int(input('Ingresar oro del mochilero: '))
         backpacker=traveler(gold)
-        path=self.prim_mst(origin)
-        print('travel ',path)
-        for node in path:
-            if backpacker.estimate==True:
-                print('Oro por debajo del 40% inicial, por favor seleccionar trabajo')
-                aux=self.Jobs(node)
-                backpacker.auxHungry+=aux[1]
-                backpacker.auxSleep+=aux[1]
-                backpacker.gold+=aux[0]
+        if backpacker.estimate==True:
+            print('Oro por debajo del 40% inicial, por favor seleccionar trabajo')
+            aux=self.Jobs(origin)
+            backpacker.auxHungry+=aux[1]
+            backpacker.auxSleep+=aux[1]
+            backpacker.gold+=aux[0]
             
         print('valor ',backpacker.auxHungry )
         print('oro', backpacker.gold)
+        
+        return True
             
             
             
@@ -183,12 +182,3 @@ class places:
         return gold, time
             
             
-    def prueba(self):
-        buscar='A'
-        for h in self.places:
-            for j in h['goingTo']:
-                if buscar == j['label']:
-                    print(h['posY'])
-    
-
-       

@@ -7,8 +7,9 @@ Created on Thu Jul 25 08:50:52 2019
 
 import pygame
 from time import sleep
+
 from pygame.locals import RESIZABLE
-from pygame.locals import K_1,K_2,K_3,K_4,K_r
+from pygame.locals import K_1,K_2,K_3,K_4,K_5,K_r
 import sys
 
 class GUI:
@@ -64,6 +65,12 @@ class GUI:
                         origin=input('Ingrese nodo origen: ')
                         aux=self.graph.prim_mst(origin)
                         self.paintPath(aux)
+                    if event.key == K_5:
+                        origin=input('Ingrese nodo origen: ')
+                        path=self.graph.prim_mst(origin)
+                        for h in path:
+                            #self.paintTravel(h,path[h][0])
+                            self.graph.travel(h)
                     if event.key == K_r:
                         print('refrescar')
                         self.screen.fill((254,245,231))
@@ -108,4 +115,12 @@ class GUI:
                  pos2=self.graph.returnPosition(path[h][0])
                  pygame.draw.line(self.screen,(46,204,113),(pos1[0]+20,pos1[1]+20),(pos2[0]+20,pos2[1]+20),5)
 
-                 
+    def paintTravel(self,origin,destination):
+        pos1=self.graph.returnPosition(origin)
+        pos2=self.graph.returnPosition(destination)
+        self.screen.blit(self.deadDonkey,(pos1[0]+10,pos1[1]+10))
+        pygame.display.flip()
+        sleep(0.5)
+        
+        
+        

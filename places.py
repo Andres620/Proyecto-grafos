@@ -82,7 +82,7 @@ class places:
                 for j in h['goingTo']:
                     if j['label']==destination:
                         j['obstruction']=not j['obstruction']
-                        print(j['obstruction'])
+                        #print(j['obstruction'])
                         pass
                 pass
         for h in self.places:
@@ -90,7 +90,7 @@ class places:
                 for j in h['goingTo']:
                     if j['label']==origin:
                         j['obstruction']=not j['obstruction']
-                        print(j['obstruction'])
+                        #print(j['obstruction'])
                         pass
                 pass
             
@@ -147,7 +147,8 @@ class places:
         aux=self.prim_mst(origin)
         for h in aux:
             if gold > self.returnGoldByKm(aux[h][1],idTransport):
-                print('pruebita ',self.returnGoldByKm(aux[h][1],idTransport))
+                print('========')
+                #print('pruebita ',self.returnGoldByKm(aux[h][1],idTransport))
                 gold-=self.returnGoldByKm(aux[h][1],idTransport)
                 path[h]=aux[h]
             else:
@@ -159,7 +160,8 @@ class places:
         aux=self.prim_mst(origin)
         for h in aux:
             if time > self.returnTimeByKm(aux[h][1],idTransport):
-                print('pruebita tiempo ',self.returnTimeByKm(aux[h][1],idTransport))
+                print('========')
+                #print('pruebita tiempo ',self.returnTimeByKm(aux[h][1],idTransport))
                 time-=self.returnTimeByKm(aux[h][1],idTransport)
                 path[h]=aux[h]
             else:
@@ -168,6 +170,10 @@ class places:
 
 
     def travel(self,origin,backpacker):   #metodo para viajar
+        job=(None,None,None)
+        act=(None,None,None)
+        dicAct={}
+
         if backpacker.goToEat()==True:
             aux=self.eat(origin)
             backpacker.gold-=aux[0]
@@ -180,30 +186,36 @@ class places:
             backpacker.gold-=aux[0]
             backpacker.timeTravel+=aux[1]
             backpacker.localTime+=aux[1]
-            print('aux sleep: ', backpacker.auxSleep)
+            #print('aux sleep: ', backpacker.auxSleep)
             backpacker.auxSleep=0
-            print('oro: ', backpacker.gold)
+            #print('oro: ', backpacker.gold)
         if backpacker.estimate()==True:
             print('\nOro por debajo del 40% inicial, por favor seleccionar trabajo')
-            aux=self.Jobs(origin)
-            backpacker.timeTravel+=aux[1] #aumenta contador de tiempo de viaje
-            backpacker.localTime+=aux[1]
-            backpacker.auxHungry+=aux[1] #aumenta contador de hambre
-            backpacker.auxSleep+=aux[1] #aumenta contador de sueño
-            backpacker.gold+=aux[0] #aumenta oro del mochilero
-        while True:
-            print('tiempo de jugar')
-            aux=self.activities(origin)
-            backpacker.timeTravel+=aux[1]
-            backpacker.localTime+=aux[1]
-            backpacker.auxHungry+=aux[1]
-            backpacker.auxSleep+=aux[1]
-            backpacker.gold-=aux[0]
-            inp=int(input('Ingrese 1:realizar otra actividad 2:salir'))
-            if inp==2:
-                break
+            job=self.Jobs(origin)
+            backpacker.timeTravel+=job[1] #aumenta contador de tiempo de viaje
+            backpacker.localTime+=job[1]
+            backpacker.auxHungry+=job[1] #aumenta contador de hambre
+            backpacker.auxSleep+=job[1] #aumenta contador de sueño
+            backpacker.gold+=job[0] #aumenta oro del mochilero
+
+        print('desea realizar alguna actividad?')
+        val=int(input('si(1) no(2)---> '))
+        if val==1:
+            while True:
+                print('tiempo de jugar')
+                act=self.activities(origin)
+                dicAct.update(act[2])
+                backpacker.timeTravel+=act[1]
+                backpacker.localTime+=act[1]
+                backpacker.auxHungry+=act[1]
+                backpacker.auxSleep+=act[1]
+                backpacker.gold-=act[0]
+                inp=int(input('Ingrese 1:realizar otra actividad 2:salir'))
+                if inp==2:
+                    break
             
         if backpacker.localTime<self.returnPlace(origin)['minTimeHere']:
+            print('ESPERANDO')
             backpacker.timeTravel+=self.returnPlace(origin)['minTimeHere'] - backpacker.localTime
             backpacker.localTime=0
         
@@ -212,8 +224,9 @@ class places:
         backpacker.auxHungry+=aux[1]
         backpacker.auxSleep+=aux[1]
         backpacker.gold-=aux[0]
-        print('tiempo de viaje',backpacker.timeTravel )
-        print('oro', backpacker.gold)
+        backpacker.report[origin]={'job':job[2],'activities':dicAct,'gold':backpacker.gold,'timeTravel':backpacker.timeTravel}
+        #print('tiempo de viaje',backpacker.timeTravel )
+        #print('oro', backpacker.gold)
         
         
         
@@ -232,9 +245,20 @@ class places:
         print(auxPrint)
         val=int(input('---> '))
         cant=int(input('cantidad de veces que va a realizar el trabajo --> '))
+        job=self.JobsReport(label,val)
         time=city['jobs'][val-1]['time']*cant
         gold=city['jobs'][val-1]['gain']*cant
-        return gold, time
+        return gold,time,job
+
+    def JobsReport(self,label,n):
+        city=self.returnPlace(label)
+        job=city['jobs'][n-1]
+        return job
+    
+    def activitiesReport(self,label,n):
+        city=self.returnPlace(label)
+        act=city['things_to_do'][n-1]
+        return act
     
     def activities(self,label):
         city=self.returnPlace(label)
@@ -248,9 +272,10 @@ class places:
                 auxPrint +='\nActividades ciudad'+city['label']+ ': ' + 'Presione ({})'.format(c) + h['name'] + ' cost: ' +  str(h['cost']) + ' time: ' + str(h['time'])
         print(auxPrint)
         val=int(input('---> '))
+        act=self.activitiesReport(label,val)
         time=city['things_to_do'][val-1]['time']
         cost=city['things_to_do'][val-1]['cost']
-        return cost,time
+        return cost,time,act
         
     
     def eat(self,label):

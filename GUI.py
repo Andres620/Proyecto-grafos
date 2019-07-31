@@ -9,7 +9,7 @@ import pygame
 from time import sleep
 from traveler import traveler
 from pygame.locals import RESIZABLE
-from pygame.locals import K_1,K_2,K_3,K_4,K_5,K_r
+from pygame.locals import K_1,K_2,K_3,K_4,K_5,K_6,K_r
 import sys
 
 class GUI:
@@ -73,7 +73,9 @@ class GUI:
                         for h in path:
                             #self.paintTravel(h,path[h][0])
                             self.graph.travel(h,backpacker)
-                        print('oro gui---->',backpacker.gold)
+                        #print('oro gui---->',backpacker.gold)
+                    if event.key == K_6:
+                        print('reporte: \n',backpacker.readReport())
                     if event.key == K_r:
                         print('refrescar')
                         self.screen.fill((254,245,231))

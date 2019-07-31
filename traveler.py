@@ -16,6 +16,7 @@ class traveler:
         self.sleep=False
         self.auxHungry=18
         self.auxSleep=0
+        self.report={}
         
     def estimate(self):
         if self.gold< (self.auxGold*0.4):
@@ -30,4 +31,13 @@ class traveler:
         if self.auxSleep>=6:
             self.sleep=True
             return True
+        
+    def readReport(self):
+        for h in self.report:
+            print('reporte de la ciudad: ',h)
+            for j in self.report[h]:
+                print(j+'-->')
+            #    for k in self.report[h][j]: #esto debe mostrar el reporte
+             #       print(k)
+            
         

@@ -32,7 +32,9 @@ def main():
         print('\n','camino con tiempo: ',gr.longWayWithTime('A',2500,1))
         #print('\n travel:',gr.travel('A'))
         #print('place:',gr.returnPlace('A'))
-            
+        #print('place value: ', gr.returnTransportNode('A','C'))
+        #print(gr.returnTranssport(1))
+        #print(gr.transportX('G'))
         print('hola mundo')
         gui.window()
         

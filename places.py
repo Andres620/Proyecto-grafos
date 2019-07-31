@@ -26,6 +26,11 @@ class places:
         
     def printTransport(self):
         print('Transportes:  ',self.transport ,"\n")
+    
+    def returnTranssport(self,idT):
+        for h in self.transport:
+            if h['id']==idT:
+                return h
         
     def printPlaces(self,label):
         for h in self.places:
@@ -36,6 +41,20 @@ class places:
         for h in self.places:
             if h['label']==label:
                 return h
+    def returnTransportNode(self,origin,destination):        #retorna los datos de la ciudad que tenga ese label
+        for h in self.places:
+            if h['label']==origin:
+                for j in h['goingTo']:
+                    if j['label']==destination:
+                        return j['transportForms']
+    
+    def returnTravelDistanceNode(self,origin,destination):        #retorna los datos de la ciudad que tenga ese label
+        for h in self.places:
+            if h['label']==origin:
+                for j in h['goingTo']:
+                    if j['label']==destination:
+                        return j['travelDistance']
+            
     def returnMinTime(self,label):
         for h in self.places:
             if h['label']==label:
@@ -161,8 +180,8 @@ class places:
             backpacker.gold-=aux[0]
             backpacker.timeTravel+=aux[1]
             backpacker.localTime+=aux[1]
-            backpacker.auxSleep=0
             print('aux sleep: ', backpacker.auxSleep)
+            backpacker.auxSleep=0
             print('oro: ', backpacker.gold)
         if backpacker.estimate()==True:
             print('\nOro por debajo del 40% inicial, por favor seleccionar trabajo')
@@ -183,8 +202,16 @@ class places:
             inp=int(input('Ingrese 1:realizar otra actividad 2:salir'))
             if inp==2:
                 break
+            
+        if backpacker.localTime<self.returnPlace(origin)['minTimeHere']:
+            backpacker.timeTravel+=self.returnPlace(origin)['minTimeHere'] - backpacker.localTime
+            backpacker.localTime=0
         
-        
+        aux=self.transportX(origin)
+        backpacker.timeTravel+=aux[1]
+        backpacker.auxHungry+=aux[1]
+        backpacker.auxSleep+=aux[1]
+        backpacker.gold-=aux[0]
         print('tiempo de viaje',backpacker.timeTravel )
         print('oro', backpacker.gold)
         
@@ -247,10 +274,42 @@ class places:
                 time=h['time']
                 cost=h['cost']
                 continue
+        print('DURMIENDO')
         return cost,time
+    
+    def transportX(self,label):
+        path=self.prim_mst(label)
+        time=0
+        cost=0
+        auxPrint=''
+        for h in path:
+            if h==label:
+                transports=self.returnTransportNode(h,path[h][0])
+                travelDistance=self.returnTravelDistanceNode(h,path[h][0])
+                print(transports)
+                pass
         
-        
-        
-        
-        
-        
+        print('\nMedios de transporte:' )
+        for h in transports:
+            print('ht-->',h)
+            aux=self.returnTranssport(h)
+            print('auxT-->',aux)
+            auxPrint +='\nPresione id del transporte ({})'.format(aux['id'])+ 'Tipo:' + aux['name'] + ' valor por km: ' +  str(aux['valueByKm']) + ' tiempo por km: ' + str(aux['timeByKm'])
+        print(auxPrint)
+        val=int(input('---> '))        
+        aux=self.returnTranssport(val)
+        print(aux['timeByKm'])
+        time=self.returnTimeByKm(travelDistance,val)
+        print(time)
+        cost=self.returnGoldByKm(travelDistance,val)
+        return cost,time
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
